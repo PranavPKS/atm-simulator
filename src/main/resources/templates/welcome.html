@@ -5,9 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>ATM Simulator</title>
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap-theme.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
+	<link rel="stylesheet" th:href="@{/css/jquery.numpad.css}">
+    <script type="text/javascript" th:src="@{/js/jquery.numpad.js}"></script>
+
+<script type="text/javascript">
+
+        	$.fn.numpad.defaults.gridTpl = '<table class="table modal-content"></table>';
+			$.fn.numpad.defaults.backgroundTpl = '<div class="modal-backdrop in"></div>';
+			$.fn.numpad.defaults.displayTpl = '<input type="text" class="form-control" />';
+			$.fn.numpad.defaults.buttonNumberTpl =  '<button type="button" class="btn btn-default"></button>';
+			$.fn.numpad.defaults.buttonFunctionTpl = '<button type="button" class="btn" style="width: 100%;"></button>';
+			$.fn.numpad.defaults.onKeypadCreate = function(){$(this).find('.done').addClass('btn-primary');};
+
+        $(document).ready(function(){
+				$('#numpadButton-btn').numpad({
+					target: $('#numpadButton')
+				});
+				$('#pin').numpad({
+					displayTpl: '<input class="form-control" type="password" />',
+					hidePlusMinusButton: true,
+					hideDecimalButton: true	
+				});
+			});
+
+    </script>
 
 </head>
 
@@ -22,93 +51,66 @@
     <div class="starter-template">
         <h1>ATM Simulator</h1>
         <h2>
-            <span th:text="'Welcome ! '"></span>
+            <span th:text="'Welcome! '"></span> <br/>
+            <span th:if="${error != null}" th:text="${error}"></span>
         </h2>
+    <img th:src="@{/images/atm.png}" class="center"/>
     </div>
-    <table id="keypad" cellpadding="5" cellspacing="3">
-        <tr>
-            <td onclick="addCode('1');">1</td>
-            <td onclick="addCode('2');">2</td>
-            <td onclick="addCode('3');">3</td>
-        </tr>
-        <tr>
-            <td onclick="addCode('4');">4</td>
-            <td onclick="addCode('5');">5</td>
-            <td onclick="addCode('6');">6</td>
-        </tr>
-        <tr>
-            <td onclick="addCode('7');">7</td>
-            <td onclick="addCode('8');">8</td>
-            <td onclick="addCode('9');">9</td>
-        </tr>
-        <tr>
-            <td onclick="addCode('*');">*</td>
-            <td onclick="addCode('0');">0</td>
-            <td onclick="addCode('#');">#</td>
-        </tr>
-    </table>
     <div class="container">
-    <form  action="#" th:action="@{/login}"  method="post">
-        <p>Enter your account number: <input type="text" /></p>
-        <p>Enter your PIN: <input type="text"  /></p>
+    <form  action="#" th:action="@{/login}"  th:object="${account}" method="post">
+        <label for="numpadButton">Enter your account number: </label>
+        <div class="input-group">
+        <input th:field="*{accountNo}" type="number" class="form-control" id ="numpadButton" aria-describedby="numpadButton-btn" maxlength="10"/>
+        <span class="input-group-btn">
+			<button class="btn btn-default" id="numpadButton-btn" type="button"><i class="fa fa-th"></i></button>
+		</span>
+        </div>
+        <div class="form-group">
+        <label for="pin">Enter your PIN: </label> 
+        <input th:field="*{pin}" type="password" class="form-control" id="pin" maxlength="4"/>
+        </div>
+
+        <div class="btn-group">
+            <input type="submit" value="Login"/>
+            <input type="reset" value="Reset" />
+        </div>
     </form>
     </div>
-    <div class="btn-group">
-        <button>Submit</button>
-        <button>Reset</button>
-    </div>
+
+    </form>
 
 
     <style>
+    .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+    }
     .container {
-  width: 500px;
-  clear: both;
-}
+        width: 500px;
+        clear: both;
+    }
 
-.container input {
-  width: 100%;
-  clear: both;
-}
-body {
-	text-align:center;
-	background-color:#FFFFFF;
-	font-family:Verdana, Arial, Helvetica, sans-serif;
-}
-#keypad {margin:auto; margin-top:20px;}
-
-#keypad tr td {
-	vertical-align:middle;
-	text-align:center;
-	border:1px solid #000000;
-	font-size:18px;
-	font-weight:bold;
-	width:40px;
-	height:30px;
-	cursor:pointer;
-	background-color:#666666;
-	color:#CCCCCC;}
-#keypad tr td:hover {background-color:#999999; color:#FFFF00;}
-
-.display {
-	width:130px;
-	margin:10px auto auto auto;
-	background-color:#000001;
-	color:#00FF00;
-	font-size:18px;
-	border:1px solid #999999;
-}
-#message {
-	text-align:center;
-	color:#009900;
-	font-size:14px;
-	font-weight:bold;
-	display:none;
-}
-</style>
+    .container input {
+        width: 100%;
+        clear: both;
+    }
+    body {
+        text-align:center;
+        background-color:#FFFFFF;
+        font-family:Verdana, Arial, Helvetica, sans-serif;
+    }
+    .modal-backdrop
+    {
+    opacity:0.5 !important;
+    }
+    </style>
 
 </main>
 <!-- /.container -->
 
-<script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+
+
 </body>
 </html>

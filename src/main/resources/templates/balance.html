@@ -20,17 +20,17 @@
 <main role="main" class="container">
 
     <div class="starter-template">
-        <h1>Main Menu</h1>
+        <h1>View Balance</h1>
         <div class="btn-group">
-            <button>Main Menu</button>
-            <button>Exit</button>
+            <button> <a th:href="@{/menu}"> Main Menu </a></button>
+            <button> <a th:href="@{/}">Exit </a></button>
         </div>
     </div>
 
     <div class="container">
         <form  action="#" th:action="@{/login}"  method="post">
-            <p>Account Balance: $1500 </p>
-            <p>Account Balance for Withdrawal: $1500 </p>
+            <p>Account Balance: <span th:text="${balance}"></span> </p>
+            <p>Account Balance for Withdrawal: <span th:text="${balance}"></span> </p>
         </form>
     </div>
     <style>

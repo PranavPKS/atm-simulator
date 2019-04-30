@@ -21,12 +21,13 @@
 
     <div class="starter-template">
         <h1>Main Menu</h1>
+        <h4 th:text="${Text}"></h4>
         <div class="btn-group">
-            <button>View Balance</button>
-            <button>Withdraw</button>
-            <button>Deposit</button>
-            <button>Transfer</button>
-            <button>Exit</button>
+            <button><a th:href="@{/balance}">View Balance</a></button>
+            <button><a th:href="@{/withdraw}">Withdraw</a></button>
+            <button><a th:href="@{/deposit}">Deposit</a></button>
+            <button><a th:href="@{/transfer}">Transfer</a></button>
+            <button><a th:href="@{/}">Exit</a></button>
         </div>
     </div>
 

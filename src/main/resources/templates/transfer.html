@@ -14,50 +14,34 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">CSCI 5448 OOAD Project</a>
+    <a class="navbar-brand" href="#">CSCI 5448 OOAD</a>
 </nav>
 
 <main role="main" class="container">
 
     <div class="starter-template">
-        <h1>ATM Simulator</h1>
+        <h1>Transfer</h1>
         <h2>
-            <span th:text="'Wtihdraw Cash ! '"></span>
+            <span th:if="${message != null}" th:text="${message}"></span>
         </h2>
+
+        <div class="btn-group">
+            <button> <a th:href="@{/menu}"> Main Menu </a></button>
+            <button> <a th:href="@{/}">Exit </a></button>
+        </div>
     </div>
-    <table id="keypad" cellpadding="5" cellspacing="3">
-        <tr>
-            <td onclick="addCode('1');">1</td>
-            <td onclick="addCode('2');">2</td>
-            <td onclick="addCode('3');">3</td>
-        </tr>
-        <tr>
-            <td onclick="addCode('4');">4</td>
-            <td onclick="addCode('5');">5</td>
-            <td onclick="addCode('6');">6</td>
-        </tr>
-        <tr>
-            <td onclick="addCode('7');">7</td>
-            <td onclick="addCode('8');">8</td>
-            <td onclick="addCode('9');">9</td>
-        </tr>
-        <tr>
-            <td onclick="addCode('*');">*</td>
-            <td onclick="addCode('0');">0</td>
-            <td onclick="addCode('#');">#</td>
-        </tr>
-    </table>
+
     <div class="container">
-        <form  action="#" th:action="@{/login}"  method="post">
-            <p>Enter amount to withdraw: <input type="text" /></p>
+        <form  action="#" th:action="@{/transfer}"  th:object="${account}" method="post">
+            <p>Enter target account number: <input placeholder="enter amount to transfer" th:field="*{accountNo}" type="text" id ="accountnum"/></p>
+            <p>Enter amount to transfer: <input th:field="*{balance}" type="text" id="amount"/></p>
+
+            <div class="btn-group">
+                <button type="submit" value="Submit">Submit</button>
+                <button type="reset" value="Reset" >Reset</button>
+            </div>
         </form>
     </div>
-    <div class="btn-group">
-        <button>Submit</button>
-        <button>Reset</button>
-    </div>
-
-
     <style>
     .container {
   width: 500px;

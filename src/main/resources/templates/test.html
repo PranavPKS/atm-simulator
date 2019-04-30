@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<td>
+    <input type="text" readonly="readonly"
+           th:name="${stat.index}"
+           th:value="${currentClient.getClientID()}"
+           th:field="*{clientList[__${stat.index}__].clientID}"
+    />
+</td>
+
+</body>
+</html>

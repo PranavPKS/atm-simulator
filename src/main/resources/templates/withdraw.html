@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>ATM Simulator</title>
+
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">CSCI 5448 OOAD Project</a>
+</nav>
+
+<main role="main" class="container">
+
+    <div class="starter-template">
+        <h1>Withdraw Money</h1>
+        <div class="btn-group">
+            <button> <a th:href="@{/menu}"> Main Menu </a></button>
+            <button> <a th:href="@{/logout}">Exit </a></button>
+        </div>
+    </div>
+    <table id="keypad" cellpadding="5" cellspacing="3">
+        <tr>
+            <td>10</td>
+            <td>20</td>
+            <td>50</td>
+            <td>100</td>
+        </tr>
+    </table>
+    <div class="container">
+        <form  action="#" th:action="@{/withdraw}"  th:object="${account}" method="post">
+            <p>Enter amount to withdraw: <input placeholder="enter amount to withdraw" th:field="*{balance}" type="text" id ="balance"/></p>
+            <span th:if="${message != null}" th:text="${message}"></span>
+            <br>
+            <div class="btn-group">
+                <input type="submit" value="Submit" onclick="dispenser()"/>
+                <input type="reset" value="Reset" />
+            </div>
+        </form>
+        <!--TODO: below line works but not the alert function-->
+        <!--<span th:text="${session.accountNum}"></span> -->
+        <button onclick="alert('Account number: '+ String(/*[[${(int)#session.getAttribute('accountNum')}]]*/) )"> Print Receipt</button>
+    </div>
+
+
+
+    <script>
+
+        var value = document.getElementById(btn1);
+        function dispenser()
+        {
+            alert('Cash is dispensed below');
+        }
+
+    </script>
+
+    <style>
+    .container {
+        width: 500px;
+        clear: both;
+    }
+
+    .container input {
+        width: 100%;
+        clear: both;
+    }
+    body {
+        text-align:center;
+        background-color:#FFFFFF;
+        font-family:Verdana, Arial, Helvetica, sans-serif;
+    }
+    #keypad {margin:auto; margin-top:20px;}
+
+    #keypad tr td {
+        vertical-align:middle;
+        text-align:center;
+        border:1px solid #000000;
+        font-size:18px;
+        font-weight:bold;
+        width:80px;
+        height:60px;
+        cursor:pointer;
+        background-color:#009900;
+        color:#FFFFFF;}
+    #keypad tr td:hover {background-color:#999999; color:#FFFF00;}
+
+    .display {
+        width:130px;
+        margin:10px auto auto auto;
+        background-color:#000001;
+        color:#00FF00;
+        font-size:18px;
+        border:1px solid #999999;
+    }
+    #message {
+        text-align:center;
+        color:#009900;
+        font-size:14px;
+        font-weight:bold;
+        display:none;
+    }
+    </style>
+
+</main>
+<!-- /.container -->
+
+<script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+
+<script type="text/javascript">
+        window.onload = function () {
+            var screen  = document.getElementById('balance'),
+                keypad  = document.getElementById('keypad'),
+                buttons = keypad.getElementsByTagName('td');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].onclick = function () {
+                    screen.value = parseFloat(screen.value) + parseFloat(this.innerHTML);
+                    // Try to comment line below to see what happens
+                    //return false;
+                };
+            }
+        }
+</script>
+
+</body>
+</html>
